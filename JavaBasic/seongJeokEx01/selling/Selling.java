@@ -7,10 +7,10 @@ public class Selling {
 	static int prdTotalPrice=0;
 	
 	public Selling(){ 
-		
+	
 	}
 	
-
+	
 	public Selling(int prdCount, int prdPrice, int prdSellingPrice, String prdName, String prdCode) {
 		super();
 		this.prdCount = prdCount;
