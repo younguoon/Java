@@ -6,7 +6,7 @@ public class Selling {
 	String prdName, prdCode;
 	static int prdTotalPrice=0;
 	
-	public Selling(){
+	public Selling(){ 
 		
 	}
 	
