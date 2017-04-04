@@ -1,4 +1,4 @@
-package chap06;
+package chap06.Inheritance;
 
 public class InheritanceExample3 {
 	public static void main(String[] args) {

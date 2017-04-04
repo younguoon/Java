@@ -1,4 +1,4 @@
-package chap05;
+package chap05.Method;
 
 public class Accumulator {
 	int total = 0;

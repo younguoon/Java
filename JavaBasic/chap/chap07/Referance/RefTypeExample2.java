@@ -1,4 +1,4 @@
-package chap07;
+package chap07.Referance;
 
 public class RefTypeExample2 {
 	public static void main(String args[]) {

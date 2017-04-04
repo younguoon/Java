@@ -1,4 +1,4 @@
-package chap05;
+package chap05.Method;
 
 public class MethodExample4 {
 	public static void main(String[] args) {

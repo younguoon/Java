@@ -1,4 +1,4 @@
-package chap05;
+package chap05.Method;
 
 class Numbers {
     int num[];

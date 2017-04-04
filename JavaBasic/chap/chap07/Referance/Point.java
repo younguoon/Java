@@ -1,4 +1,4 @@
-package chap07;
+package chap07.Referance;
 
 public class Point {
     int x, y;                // ÇÊµå

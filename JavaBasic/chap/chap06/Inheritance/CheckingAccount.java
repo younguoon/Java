@@ -1,4 +1,4 @@
-package chap06;
+package chap06.Inheritance;
 
 public class CheckingAccount extends Account{
 	String cardNo;
