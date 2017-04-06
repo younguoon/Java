@@ -1,4 +1,5 @@
 package SeongJeok;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class SeongJeok extends Person implements Personable{
@@ -7,6 +8,9 @@ public class SeongJeok extends Person implements Personable{
 	double avg;
 	static int stdCount=0, totalSeongJeok=0, totalAvg=0;
 	Person p = new Person();
+	static ArrayList<Integer> gradeList = new ArrayList<Integer>();
+	static ArrayList<String> gradeList2 = new ArrayList<String>();
+	
 	
 	SeongJeok(){
 	}
@@ -22,7 +26,13 @@ public class SeongJeok extends Person implements Personable{
 		eng = sc.nextInt();
 		System.out.print("수학 입력 : ");
 		math = sc.nextInt();
+		
 		stdCount++;
+		
+		gradeList.add(kor);
+		gradeList.add(eng);
+		gradeList.add(math);
+		
 		return false;
 	}
 	@Override
@@ -55,6 +65,9 @@ public class SeongJeok extends Person implements Personable{
 		}
 		totalSeongJeok+=tot;
 		totalAvg+=avg;
+		gradeList.add(tot);
+		gradeList.add((int) avg);
+		gradeList2.add(grade);
 	}
 	
 	static int getTotalAvg() {

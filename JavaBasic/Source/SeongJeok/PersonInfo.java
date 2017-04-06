@@ -1,5 +1,6 @@
 package SeongJeok;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class PersonInfo extends Person implements Personable{
@@ -7,6 +8,7 @@ public class PersonInfo extends Person implements Personable{
 	static int infoCount=0;
 	Scanner sc = new Scanner(System.in);
 	Person p = new Person();
+	static ArrayList<String> personList = new ArrayList<String>();
 	
 	PersonInfo(){
 		
@@ -14,6 +16,7 @@ public class PersonInfo extends Person implements Personable{
 	
 	@Override
 	public boolean input() {
+		
 		System.out.print("학번 입력 : ");
 		p.hakbun = sc.next();
 		if(p.hakbun.toLowerCase().equals("exit"))
@@ -25,6 +28,13 @@ public class PersonInfo extends Person implements Personable{
 		System.out.print("주소 입력 : ");
 		addr = sc.next();
 		infoCount++;
+		
+		
+		personList.add(p.hakbun);
+		personList.add(p.irum);
+		personList.add(phone);
+		personList.add(addr);
+		
 		return false;
 	}
 
