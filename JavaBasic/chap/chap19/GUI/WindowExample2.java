@@ -3,6 +3,7 @@ package chap19.GUI;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,6 +22,9 @@ public class WindowExample2 {
         contentPane.add(text, BorderLayout.CENTER);
         contentPane.add(button, BorderLayout.EAST);
         contentPane.add(label, BorderLayout.SOUTH);
+        ActionListener listener = new ConfirmButtonActionListener(text, label);
+        button.addActionListener(listener);
+        
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
