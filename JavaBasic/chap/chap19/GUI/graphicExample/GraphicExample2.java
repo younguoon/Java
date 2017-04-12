@@ -16,6 +16,7 @@ public class GraphicExample2 {
 		frame.setLocation(500, 200);
 		frame.setPreferredSize(new Dimension(400,350));
 		Container contentPane = frame.getContentPane();
+		
 		DrawingPanel drawingPanel = new DrawingPanel();
 		contentPane.add(drawingPanel, BorderLayout.CENTER);
 		JPanel controlPanel = new JPanel();
@@ -32,10 +33,14 @@ public class GraphicExample2 {
 		controlPanel.add(text3);
 		controlPanel.add(button);
 		contentPane.add(controlPanel, BorderLayout.SOUTH);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		button.addActionListener(new DrawActionListener(text1, text2, text3, drawingPanel));
+		
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);
 		
 	}
 }
+
+

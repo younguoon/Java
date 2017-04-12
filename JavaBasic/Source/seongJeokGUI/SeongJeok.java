@@ -4,14 +4,14 @@ import java.util.Scanner;
 
 public class SeongJeok {
 	String hakbun, irum, grade;
-	int kor, eng, math, tot, avg;
-	
+	int kor, eng, math, tot;
+	double avg;
 	
 	SeongJeok(){
 	}
 
 
-	public SeongJeok(String hakbun, String irum, int kor, int eng, int math, int tot, int avg, String grade) {
+	public SeongJeok(String hakbun, String irum, int kor, int eng, int math, int tot, double avg, String grade) {
 //		super();
 		this.hakbun = hakbun;
 		this.irum = irum;
@@ -40,7 +40,7 @@ public class SeongJeok {
 	}
 	
 	void output() {
-		System.out.printf("%3s  %3s   %3d  %3d  %3d  %3d  %3s   %2s \n", 
+		System.out.printf("%3s  %3s   %3d  %3d  %3d  %3d  %3f   %2s \n", 
 				hakbun, irum,  kor, eng, math, tot, avg, grade);
 	}
 	

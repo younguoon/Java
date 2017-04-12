@@ -7,25 +7,25 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-public class EventActionListener implements ActionListener {
+public class EventActionListener2 implements ActionListener {
 	JTable table;
 	JTextField txHakbun, txIrum, txKor, txEng, txMath, txTot, txAvg, txGrade;
 	DrawingPanel drawingPanel;
 
-	EventActionListener() {
+	EventActionListener2() {
 	}
 
-	EventActionListener(JTable table) {
+	EventActionListener2(JTable table) {
 		this.table = table;
 	}
 
-	public EventActionListener(JTable table, DrawingPanel drawingPanel) {
+	public EventActionListener2(JTable table, DrawingPanel drawingPanel) {
 		this.table = table;
 		this.drawingPanel = drawingPanel;
 	}
 
-	public EventActionListener(JTable table, JTextField txHakbun, JTextField txIrum, JTextField txKor, JTextField txEng,
-			JTextField txMath) {
+	public EventActionListener2(JTable table, JTextField txHakbun, JTextField txIrum, JTextField txKor,
+			JTextField txEng, JTextField txMath) {
 		super();
 		this.table = table;
 		this.txHakbun = txHakbun;
@@ -43,27 +43,13 @@ public class EventActionListener implements ActionListener {
 			delete();
 		} else if (e.getActionCommand().equals("수정")) {
 			update();
-		} else if (e.getActionCommand().equals("그래프 그리기")){
+		} else {
 			draw();
 		}
 	}
 
 	private void draw() {
-		int kor = 0, eng = 0, math = 0, avg = 0;
 
-		int row = table.getSelectedRow();
-		if (row == -1)
-			return;
-
-		DefaultTableModel model = (DefaultTableModel) table.getModel();
-
-		kor = Integer.parseInt((String) model.getValueAt(row, 2));
-		eng = Integer.parseInt((String) model.getValueAt(row, 3));
-		math = Integer.parseInt((String) model.getValueAt(row, 4));
-		avg = (int)Double.parseDouble((String) model.getValueAt(row, 6));
-
-		drawingPanel.setScores(kor, eng, math, avg);
-		drawingPanel.repaint();
 	}
 
 	void insert() {
@@ -76,8 +62,7 @@ public class EventActionListener implements ActionListener {
 		obj.kor = Integer.parseInt(txKor.getText().trim());
 		obj.eng = Integer.parseInt(txEng.getText().trim());
 		obj.math = Integer.parseInt(txMath.getText().trim());
-		obj.process();
-		
+
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		rowNum = model.getRowCount();
 		for (i = 0; i < rowNum; i++) {
@@ -106,6 +91,7 @@ public class EventActionListener implements ActionListener {
 		txKor.setText("");
 		txEng.setText("");
 		txMath.setText("");
+
 	}
 
 	void delete() {
@@ -119,8 +105,8 @@ public class EventActionListener implements ActionListener {
 	}
 
 	void update() {
-		int i, rowNum;
-		String hakbun = null;
+		int i, rowNum, flag = 0;
+		String table_hakbun = null;
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		SeongJeok obj = new SeongJeok();
 
@@ -132,24 +118,28 @@ public class EventActionListener implements ActionListener {
 
 		rowNum = model.getRowCount();
 		for (i = 0; i < rowNum; i++) {
-			hakbun = model.getValueAt(i, 0).toString().trim();
-			if (obj.hakbun.equals(hakbun)) {
-				model.setValueAt(Integer.toString(obj.kor), i, 2);
-				model.setValueAt(Integer.toString(obj.eng), i, 3);
-				model.setValueAt(Integer.toString(obj.math), i, 4);
-				model.setValueAt(Integer.toString(obj.tot), i, 5);
-				model.setValueAt(Double.toString((Math.round(obj.avg * 100)) / 100.), i, 6);
+			table_hakbun = model.getValueAt(i, 0).toString().trim();
+			if (table_hakbun.equals(obj.hakbun)) {
+				model.setValueAt(obj.kor, i, 2);
+				model.setValueAt(obj.eng, i, 3);
+				model.setValueAt(obj.math, i, 4);
+				model.setValueAt(obj.tot, i, 5);
+				model.setValueAt(obj.avg, i, 6);
 				model.setValueAt(obj.grade, i, 7);
-				System.out.println("학번 " + obj.hakbun + "수정 성공!");
-				txHakbun.setText("");
-				txIrum.setText("");
-				txKor.setText("");
-				txEng.setText("");
-				txMath.setText("");
-				return;
+				flag = 1;
+				break;
 			}
 		}
-		System.out.println("학번 " + obj.hakbun + "수정 실패!");
+		if (flag == 0)
+			System.out.println("학번 " + obj.hakbun + "수정 실패!");
+		else
+			System.out.println("학번 " + obj.hakbun + "수정 성공!");
+
+		txHakbun.setText("");
+		txIrum.setText("");
+		txKor.setText("");
+		txEng.setText("");
+		txMath.setText("");
 
 	}
 }
