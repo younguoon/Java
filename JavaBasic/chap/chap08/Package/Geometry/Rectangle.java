@@ -1,4 +1,4 @@
-package chap08.Geometry2;
+package chap08.Package.Geometry;
 
 public class Rectangle {
 	public int width, height;
@@ -8,7 +8,7 @@ public class Rectangle {
 		this.width = width;
 		this.height = height;
 	}
-	public int getArea(){
+	int getArea(){
 		return width*height;
 	}
 }

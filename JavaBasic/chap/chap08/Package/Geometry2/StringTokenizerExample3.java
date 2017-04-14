@@ -1,4 +1,4 @@
-package chap08.Geometry2;
+package chap08.Package.Geometry2;
 
 import java.util.StringTokenizer;
 

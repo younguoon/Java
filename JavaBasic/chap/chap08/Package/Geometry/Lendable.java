@@ -1,4 +1,4 @@
-package chap08.Geometry;
+package chap08.Package.Geometry;
 
 public interface Lendable {
 	void checkOut(String borrower, String date);

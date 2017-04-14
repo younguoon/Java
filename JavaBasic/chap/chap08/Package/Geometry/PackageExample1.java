@@ -1,4 +1,4 @@
-package chap08.Geometry;
+package chap08.Package.Geometry;
 
 public class PackageExample1 {
 	public static void main(String[] args) {
