@@ -1,4 +1,4 @@
-package seongJeokGUI;
+package sungJuk.jdbc.gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -6,8 +6,6 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 public class DrawingPanel extends JPanel{
-	public DrawingPanel() {
-	}
 	int korean, english, math;
 	double avg;
 	public void paint(Graphics g){
@@ -32,7 +30,7 @@ public class DrawingPanel extends JPanel{
 			g.fillRect(310, 250-math*2, 10, math*2);
 		if(avg>0)
 			g.setColor(Color.blue);
-			g.fillRect(410, 250-math*2, 10, math*2);
+			g.fillRect(410, (int)(250-avg*2), 10, (int)(avg*2));
 	}	
 	void setScores(int korean, int english, int math, int avg){
 		this.korean=korean;

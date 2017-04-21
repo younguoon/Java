@@ -1,19 +1,15 @@
-package hyelim.sungjuk;
+package sungJuk.jdbc;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Sungjuk_JDBC {
 
 	public static void main(String[] args) {
-		// ArrayList<Sungjuk> sungjuk = new ArrayList<Sungjuk>();
 		Scanner scan = new Scanner(System.in);
 
 		// database connect
