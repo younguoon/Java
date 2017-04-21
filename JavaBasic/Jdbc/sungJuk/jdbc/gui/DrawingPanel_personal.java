@@ -5,7 +5,7 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
-public class DrawingPanel extends JPanel{
+public class DrawingPanel_personal extends JPanel{
 	int korean, english, math;
 	double avg;
 	public void paint(Graphics g){
@@ -20,7 +20,7 @@ public class DrawingPanel extends JPanel{
 		g.drawString("영어", 200, 270);
 		g.drawString("수학", 300, 270);
 		g.drawString("평균", 400, 270);
-		
+		System.out.println("drawingPanel-personal");
 		g.setColor(Color.RED);
 		if(korean>0)
 			g.fillRect(110, 250-korean*2, 10, korean*2);

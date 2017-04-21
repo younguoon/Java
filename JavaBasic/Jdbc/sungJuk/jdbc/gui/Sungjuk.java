@@ -7,6 +7,9 @@ public class Sungjuk {
 	int kor, eng, math, tot;
 	double avg;
 	
+	//ÀüÃ¼Æò±Õ °´Ã¼»ý¼º
+	double avgKor, avgEng, avgMath, avgTot;
+
 	Sungjuk(){
 	}
 

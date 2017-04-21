@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
 public class EventActionListener implements ActionListener {
 	static JTable table;
 	JTextField txHakbun, txIrum, txKor, txEng, txMath, txTot, txAvg, txGrade;
-	DrawingPanel drawingPanel;
+	DrawingPanel_personal drawingPanel;
 
 	// -----------------------------------------DB 사용을 위한 준비
 	static Connection con = null;
@@ -44,7 +44,7 @@ public class EventActionListener implements ActionListener {
 		this.txHakbun = txHakbun;
 	}
 
-	public EventActionListener(JTable table, DrawingPanel drawingPanel) {
+	public EventActionListener(JTable table, DrawingPanel_personal drawingPanel) {
 		this.table = table;
 		this.drawingPanel = drawingPanel;
 	}
