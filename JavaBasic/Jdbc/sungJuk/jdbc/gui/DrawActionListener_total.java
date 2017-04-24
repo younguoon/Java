@@ -8,9 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class DrawActionListener_total implements ActionListener {
-	Double avgKor, avgEng, avgMath, avgAvg;
+	int avgKor, avgEng, avgMath, avgAvg;
 	
-	public DrawActionListener_total(Double avgKor, Double avgEng, Double avgMath, Double avgAvg) {
+	public DrawActionListener_total(int avgKor, int avgEng, int avgMath, int avgAvg, DrawingPanel_total drawingpanel_total) {
 		this.avgKor = avgKor;
 		this.avgEng = avgEng;
 		this.avgMath = avgMath;
@@ -22,15 +22,16 @@ public class DrawActionListener_total implements ActionListener {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		Connection con = null;
-		String sql_total = "select avg(kor), avg(eng), avg(math), avg(avg) from sungjuk;";
+		String sql_total = "select ceil(avg(kor)) avgKor, ceil(avg(eng)) avgEng, ceil(avg(math)) avgMath, ceil(avg(avg)) avgAvg from sungjuk";
 		try {
+			System.out.println("HERE IS total listener ~! Connected DB ");
 			con = connectDB();
 			pstmt = con.prepareStatement(sql_total);
 			rs = pstmt.executeQuery();
-			avgKor = rs.getDouble("avg(kor)");
-			avgEng = rs.getDouble("avg(eng)");
-			avgMath = rs.getDouble("avg(math)");
-			avgAvg = rs.getDouble("avg(avg)");
+			avgKor = rs.getInt("avgKor");
+			avgEng = rs.getInt("avgEng");
+			avgMath = rs.getInt("avgMath");
+			avgAvg = rs.getInt("avgAvg");
 			System.out.println(avgKor);
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());

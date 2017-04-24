@@ -9,7 +9,7 @@ import javax.swing.JTextField;
 public class DrawActionListener_personal implements ActionListener{
 	JTextField text1, text2, text3, txKor, txEng, txMath;
 	
-	public DrawActionListener_personal(JTextField txKor, JTextField txEng, JTextField txMath, DrawingPanel_personal drawingPanel2) {
+	public DrawActionListener_personal(JTextField txKor, JTextField txEng, JTextField txMath, DrawingPanel_personal drawingPanel_personal) {
 		this.txKor=txKor;
 		this.txEng=txEng;
 		this.txMath=txMath;
@@ -26,3 +26,5 @@ public class DrawActionListener_personal implements ActionListener{
 		}
 	}
 }
+
+

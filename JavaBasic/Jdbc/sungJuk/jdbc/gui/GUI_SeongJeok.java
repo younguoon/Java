@@ -11,7 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.awt.FlowLayout;
@@ -24,23 +23,36 @@ import javax.swing.ListSelectionModel;
 import java.awt.Toolkit;
 import javax.swing.JTabbedPane;
 import javax.swing.ImageIcon;
+import javax.swing.JTextPane;
+import javax.swing.border.EmptyBorder;
 
 public class GUI_SeongJeok {
 	static String colNames[] = { "ÇÐ¹ø", "ÀÌ¸§", "±¹¾î", "¿µ¾î", "¼öÇÐ", "ÃÑÁ¡", "Æò±Õ", "µî±Þ" };
 	static DefaultTableModel model = new DefaultTableModel(colNames, 0);
-
+	static int guiAvgKor_total=0, guiAvgEng_total=0, guiAvgMath_total=0, guiAvgTotAvg_total=0;
+	static int guiAvgKor_personal=0, guiAvgEng_personal=0, guiAvgMath_personal=0, guiAvgTotAvg_personal=0;
+	
+	static JTextPane textPane_kor_total = new JTextPane();
+	static JTextPane textPane_eng_total = new JTextPane();
+	static JTextPane textPane_math_total = new JTextPane();
+	static JTextPane textPane_totAvg_total = new JTextPane();
+	
+	static JTextPane textPane_kor_personal = new JTextPane();
+	static JTextPane textPane_eng_personal = new JTextPane();
+	static JTextPane textPane_math_personal = new JTextPane();
+	static JTextPane textPane_totAvg_personal = new JTextPane();
+	
 	public static void main(String[] args) {
-		JFrame frame = new JFrame("\uC131\uC801\uAD00\uB9AC \uD504\uB85C\uADF8\uB7A8");
+		JFrame frame = new JFrame("¼ºÀû°ü¸® ÇÁ·Î±×·¥");
 		frame.setBackground(new Color(255, 255, 255));
 		frame.setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(GUI_SeongJeok.class.getResource("/com/sun/java/swing/plaf/motif/icons/Inform.gif")));
 		frame.getContentPane().setBackground(new Color(255, 255, 255));
 		frame.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 19));
-		frame.setPreferredSize(new Dimension(500, 840));
+		frame.setPreferredSize(new Dimension(500, 860));
 		frame.setLocation(400, 200);
 		Container contentPane = frame.getContentPane();
 
-		DefaultTableCellRenderer celAlignCenter = new DefaultTableCellRenderer();
 		JTable table = new JTable(model);
 		table.setFont(new Font("¸¼Àº °íµñ", Font.PLAIN, 16));
 		table.setSurrendersFocusOnKeystroke(true);
@@ -139,7 +151,7 @@ public class GUI_SeongJeok {
 		button_select.setFont(new Font("¸¼Àº °íµñ Semilight", Font.BOLD, 14));
 		panel_button.add(button_select);
 		button_select.addActionListener(new EventActionListener(table));
-		
+
 		JButton button_search = new JButton("°Ë»ö");
 		button_search.setFont(new Font("¸¼Àº °íµñ Semilight", Font.BOLD, 14));
 		panel_button.add(button_search);
@@ -198,30 +210,92 @@ public class GUI_SeongJeok {
 		tabbedPane.setBorder(new LineBorder(new Color(0, 0, 0)));
 		frame.getContentPane().add(tabbedPane, BorderLayout.CENTER);
 
+		JPanel panel_total = new JPanel();
+		panel_total.setBackground(new Color(255, 255, 255));
+		panel_total.setForeground(new Color(0, 0, 128));
+		tabbedPane.addTab("ÀüÃ¼¼ºÀû Â÷Æ®",
+				new ImageIcon(GUI_SeongJeok.class.getResource("/javax/swing/plaf/basic/icons/image-delayed.png")),
+				panel_total, null);
+		tabbedPane.setForegroundAt(0, new Color(0, 0, 128));
+		panel_total.setLayout(new BorderLayout(0, 0));
+
 		// -------------------------------------------------------------------------Â÷Æ®
+		// ÀüÃ¼¼ºÀû Â÷Æ®
+		DrawingPanel_total drawingPanel_Total = new DrawingPanel_total();
+		panel_total.add(drawingPanel_Total, BorderLayout.CENTER);
+		drawingPanel_Total.setBorder(new LineBorder(new Color(0, 0, 0)));
+		drawingPanel_Total.setForeground(new Color(47, 79, 79));
+		drawingPanel_Total.setBackground(new Color(255, 228, 225));
+		drawingPanel_Total.setLayout(new BorderLayout(0, 0));
+		button_select.addActionListener(new EventActionListener(table, drawingPanel_Total));
+
+		JPanel panel_total_totalNumbers = new JPanel();
+		panel_total_totalNumbers.setBorder(new EmptyBorder(0, 0, 0, 0));
+		panel_total.add(panel_total_totalNumbers, BorderLayout.NORTH);
+		panel_total_totalNumbers.setLayout(new GridLayout(0, 4, 0, 0));
+		textPane_kor_total.setForeground(new Color(0, 0, 0));
+		textPane_kor_total.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 15));
+
+		textPane_kor_total.setText("  ±¹¾î :  " + guiAvgKor_total);
+		panel_total_totalNumbers.add(textPane_kor_total);
+		textPane_eng_total.setForeground(new Color(0, 0, 0));
+		textPane_eng_total.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 15));
+
+		textPane_eng_total.setText("  ¿µ¾î :  " + guiAvgEng_total);
+		panel_total_totalNumbers.add(textPane_eng_total);
+		textPane_math_total.setForeground(new Color(0, 0, 0));
+		textPane_math_total.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 15));
+
+		textPane_math_total.setText("  ¼öÇÐ :  " + guiAvgMath_total);
+		panel_total_totalNumbers.add(textPane_math_total);
+		textPane_totAvg_total.setForeground(new Color(0, 0, 0));
+		textPane_totAvg_total.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 15));
+
+		textPane_totAvg_total.setText("  Æò±Õ :  " +guiAvgTotAvg_total);
+		panel_total_totalNumbers.add(textPane_totAvg_total);
+		
+
+		JPanel panel_personal = new JPanel();
+		tabbedPane.addTab("°³ÀÎ¼ºÀû Â÷Æ®",
+				new ImageIcon(GUI_SeongJeok.class.getResource("/javax/swing/plaf/basic/icons/image-failed.png")),
+				panel_personal, null);
+		tabbedPane.setForegroundAt(1, new Color(0, 0, 128));
+		panel_personal.setLayout(new BorderLayout(0, 0));
+
 		// °³ÀÎ¼ºÀû Â÷Æ®
 		DrawingPanel_personal drawingPanel_Personal = new DrawingPanel_personal();
-		tabbedPane.addTab("°³ÀÎ¼ºÀû Â÷Æ®", new ImageIcon(GUI_SeongJeok.class.getResource("/javax/swing/plaf/basic/icons/image-failed.png")), drawingPanel_Personal, null);
-		tabbedPane.setForegroundAt(0, new Color(0, 0, 128));
-		tabbedPane.setBackgroundAt(0, new Color(255, 255, 224));
-		FlowLayout fl_drawingPanel_Personal = (FlowLayout) drawingPanel_Personal.getLayout();
-		fl_drawingPanel_Personal.setAlignOnBaseline(true);
+		panel_personal.add(drawingPanel_Personal);
 		drawingPanel_Personal.setBorder(new LineBorder(new Color(0, 0, 0)));
 		drawingPanel_Personal.setForeground(new Color(0, 0, 128));
 		drawingPanel_Personal.setBackground(new Color(255, 228, 225));
 		button_ploting.addActionListener(new EventActionListener(table, drawingPanel_Personal));
+		drawingPanel_Personal.setLayout(new BorderLayout(0, 0));
+
 		
-		//ÀüÃ¼¼ºÀû Â÷Æ®
-		DrawingPanel_personal drawingPanel_Total = new DrawingPanel_personal();
-		tabbedPane.addTab("ÀüÃ¼¼ºÀû Â÷Æ®", new ImageIcon(GUI_SeongJeok.class.getResource("/javax/swing/plaf/basic/icons/image-delayed.png")), drawingPanel_Total, null);
-		tabbedPane.setBackgroundAt(1, new Color(255, 255, 224));
-		tabbedPane.setForegroundAt(1, new Color(75, 0, 130));
-		FlowLayout fl_drawingPanel_Total = (FlowLayout) drawingPanel_Total.getLayout();
-		fl_drawingPanel_Total.setAlignOnBaseline(true);
-		drawingPanel_Total.setBorder(new LineBorder(new Color(0, 0, 0)));
-		drawingPanel_Total.setForeground(new Color(47, 79, 79));
-		drawingPanel_Total.setBackground(new Color(255, 228, 225));
-		button_select.addActionListener(new EventActionListener(table, drawingPanel_Total));
+		JPanel panel_personal_totalNumbers = new JPanel();
+		panel_personal_totalNumbers.setBorder(new EmptyBorder(0, 0, 0, 0));
+		panel_personal.add(panel_personal_totalNumbers, BorderLayout.NORTH);
+		panel_personal_totalNumbers.setLayout(new GridLayout(0, 4, 0, 0));
+
+		textPane_kor_personal.setForeground(new Color(0, 0, 0));
+		textPane_kor_personal.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 15));
+		textPane_kor_personal.setText("  ±¹¾î :  " + guiAvgKor_personal);
+		panel_personal_totalNumbers.add(textPane_kor_personal);
+
+		textPane_eng_personal.setForeground(new Color(0, 0, 0));
+		textPane_eng_personal.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 15));
+		textPane_eng_personal.setText("  ¿µ¾î :  " + guiAvgEng_personal);
+		panel_personal_totalNumbers.add(textPane_eng_personal);
+
+		textPane_math_personal.setForeground(new Color(0, 0, 0));
+		textPane_math_personal.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 15));
+		textPane_math_personal.setText("  ¼öÇÐ :  " + guiAvgMath_personal);
+		panel_personal_totalNumbers.add(textPane_math_personal);
+
+		textPane_totAvg_personal.setForeground(new Color(0, 0, 0));
+		textPane_totAvg_personal.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 15));
+		textPane_totAvg_personal.setText("  Æò±Õ :  " + guiAvgTotAvg_personal);
+		panel_personal_totalNumbers.add(textPane_totAvg_personal);
 		// -------------------------------------------------------------------------Â÷Æ®
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

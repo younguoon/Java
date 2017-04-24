@@ -12,10 +12,10 @@ public class DrawingPanel extends JPanel{
 	double avg;
 	public void paint(Graphics g){
 		g.clearRect(0, 0, getWidth(), getHeight());
-		g.drawLine(50, 250, 450, 250);
+		g.drawLine(50, 250, 400, 250);
 		for (int i = 0; i < 11; i++) {
-			g.drawString(i*10 + "", 25, 255-20*i);
-			g.drawLine(50, 250-20*i, 450, 250-20*i);
+			g.drawString(i*30 + "", 25, 255-20*i);
+			g.drawLine(50, 250-20*i, 400, 250-20*i);
 		}
 		g.drawLine(50, 20, 50, 250);
 		g.drawString("국어", 100, 270);
@@ -23,7 +23,8 @@ public class DrawingPanel extends JPanel{
 		g.drawString("수학", 300, 270);
 		g.drawString("평균", 400, 270);
 		
-		g.setColor(Color.RED);
+		
+		g.setColor(Color.DARK_GRAY);
 		if(korean>0)
 			g.fillRect(110, 250-korean*2, 10, korean*2);
 		if(english>0)

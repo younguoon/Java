@@ -6,16 +6,13 @@ public class Sungjuk {
 	String hakbun, irum, grade;
 	int kor, eng, math, tot;
 	double avg;
-	
-	//ÀüÃ¼Æò±Õ °´Ã¼»ý¼º
-	double avgKor, avgEng, avgMath, avgTot;
+	int avgKor, avgEng, avgMath, avgAvg;
 
+	
 	Sungjuk(){
 	}
 
-
 	public Sungjuk(String hakbun, String irum, int kor, int eng, int math, int tot, double avg, String grade) {
-//		super();
 		this.hakbun = hakbun;
 		this.irum = irum;
 		this.grade = grade;

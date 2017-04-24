@@ -15,16 +15,16 @@ import javax.swing.table.DefaultTableModel;
 public class EventActionListener implements ActionListener {
 	static JTable table;
 	JTextField txHakbun, txIrum, txKor, txEng, txMath, txTot, txAvg, txGrade;
-	DrawingPanel_personal drawingPanel;
+	DrawingPanel_personal drawingPanel_personal;
+	DrawingPanel_total drawingPanel_total;
 
 	// -----------------------------------------DB 사용을 위한 준비
 	static Connection con = null;
 	static Scanner sc = new Scanner(System.in);
 	// model(DB값 뿌려줄 테이블)
 	// -----------------------------------------DB
-
+	
 	EventActionListener() {
-
 	}
 
 	EventActionListener(JTable table, JTextField txHakbun, JTextField txKor, JTextField txEng, JTextField txMath) {
@@ -44,9 +44,14 @@ public class EventActionListener implements ActionListener {
 		this.txHakbun = txHakbun;
 	}
 
-	public EventActionListener(JTable table, DrawingPanel_personal drawingPanel) {
+	public EventActionListener(JTable table, DrawingPanel_personal drawingPanel_personal) {
 		this.table = table;
-		this.drawingPanel = drawingPanel;
+		this.drawingPanel_personal = drawingPanel_personal;
+	}
+	
+	public EventActionListener(JTable table, DrawingPanel_total drawingPanel_total) {
+		this.table = table;
+		this.drawingPanel_total = drawingPanel_total;
 	}
 
 	public EventActionListener(JTable table, JTextField txHakbun, JTextField txIrum, JTextField txKor, JTextField txEng,
@@ -110,7 +115,7 @@ public class EventActionListener implements ActionListener {
 			pstmt.setInt(6, obj.tot);
 			pstmt.setDouble(7, obj.avg);
 			pstmt.setString(8, obj.grade);
-			int res = pstmt.executeUpdate();
+			pstmt.executeUpdate();
 //			if (res == 1)
 //				System.out.println("입력 성공");
 //			else
@@ -124,7 +129,7 @@ public class EventActionListener implements ActionListener {
 					return;
 				}
 			}
-
+			
 			String arr[] = new String[8];
 			arr[0] = obj.hakbun;
 			arr[1] = obj.irum;
@@ -148,7 +153,6 @@ public class EventActionListener implements ActionListener {
 				txEng.setText(rs.getString("eng"));
 				txMath.setText(rs.getString("math"));
 			}
-
 		} catch (Exception e) {
 			System.out.println("DB연결 실패" + e.getMessage());
 		} finally {
@@ -168,15 +172,19 @@ public class EventActionListener implements ActionListener {
 	// ---------------------------------------------------------------------SELECT
 	private void select() {
 		PreparedStatement pstmt_select = null;
+		PreparedStatement pstmt_total = null;
 		ResultSet rs = null;
-		String sql_select = "select *from sungjuk order by hakbun";
+		ResultSet rs_total = null;
+		String sql_select = "select *from sungjuk order by hakbun asc";
+		String sql_total = "select ceil(avg(kor)) avgKor, ceil(avg(eng)) avgEng, ceil(avg(math)) avgMath, ceil(avg(avg)) avgAvg from sungjuk";
+		
 		try{
+			GUI_SeongJeok.model.setNumRows(0);
 			Sungjuk obj = new Sungjuk();
 			con = connectDB();
 			pstmt_select = con.prepareStatement(sql_select);
 			rs = pstmt_select.executeQuery();
 			rs.next();
-			GUI_SeongJeok.model.setNumRows(0);
 				while(rs.next()){
 					GUI_SeongJeok.model.addRow(new Object[]{
 								rs.getString("hakbun"), 
@@ -189,8 +197,30 @@ public class EventActionListener implements ActionListener {
 								rs.getString("grade")}
 							);
 				}
+//			System.out.println("THIS IS eventAction select for before SQL QUERY");
+			pstmt_total = con.prepareStatement(sql_total);
+//			System.out.println("THIS IS eventAction select for before EXECUTE QUERY");
+			rs_total = pstmt_total.executeQuery();
+			rs_total.next();
+//			System.out.println("THIS IS eventAction select for before DRAWING");
+			obj.avgKor = rs_total.getInt("avgKor");
+			obj.avgEng = rs_total.getInt("avgEng");
+			obj.avgMath = rs_total.getInt("avgMath");
+			obj.avgAvg = rs_total.getInt("avgAvg");
+			drawingPanel_total.setScores(obj.avgKor, obj.avgEng, obj.avgMath, obj.avgAvg);
+			drawingPanel_total.repaint();
+//			System.out.println("avgKor check  :  "+obj.avgKor +"   avgEng check :  "+ obj.avgEng);
+			GUI_SeongJeok.guiAvgKor_total = obj.avgKor;
+			GUI_SeongJeok.guiAvgEng_total = obj.avgEng;
+			GUI_SeongJeok.guiAvgMath_total = obj.avgMath;
+			GUI_SeongJeok.guiAvgTotAvg_total = obj.avgAvg;
+			
+			GUI_SeongJeok.textPane_kor_total.setText("  국어 :  "+Integer.toString((GUI_SeongJeok.guiAvgKor_total)));
+			GUI_SeongJeok.textPane_eng_total.setText("  영어 :  "+Integer.toString((GUI_SeongJeok.guiAvgEng_total)));
+			GUI_SeongJeok.textPane_math_total.setText("  수학 :  "+Integer.toString((GUI_SeongJeok.guiAvgMath_total)));
+			GUI_SeongJeok.textPane_totAvg_total.setText("  평균 :  "+Integer.toString((GUI_SeongJeok.guiAvgTotAvg_total)));
 		}catch(Exception e){
-			System.out.println("message1 : "+e.getMessage());
+//			System.out.println("message1 : "+e.getMessage());
 		}finally{
 			try{
 				if(rs != null) rs.close();
@@ -318,7 +348,7 @@ public class EventActionListener implements ActionListener {
 			con = connectDB();
 			pstmt = con.prepareStatement(sql_delete);
 			pstmt.setString(1, hakbun);
-			int res = pstmt.executeUpdate();
+			pstmt.executeUpdate();
 //			if (res == 1)
 //				System.out.println("학번" + hakbun + "삭제 성공!");
 //			else
@@ -342,8 +372,18 @@ public class EventActionListener implements ActionListener {
 		math = Integer.parseInt((String) GUI_SeongJeok.model.getValueAt(row, 4));
 		avg = (int) Double.parseDouble((String) GUI_SeongJeok.model.getValueAt(row, 6));
 
-		drawingPanel.setScores(kor, eng, math, avg);
-		drawingPanel.repaint();
+		drawingPanel_personal.setScores(kor, eng, math, avg);
+		drawingPanel_personal.repaint();
+		
+		GUI_SeongJeok.guiAvgKor_personal = kor;
+		GUI_SeongJeok.guiAvgEng_personal = eng;
+		GUI_SeongJeok.guiAvgMath_personal = math;
+		GUI_SeongJeok.guiAvgTotAvg_personal = avg;
+		
+		GUI_SeongJeok.textPane_kor_personal.setText("  국어 :  "+Integer.toString((GUI_SeongJeok.guiAvgKor_personal)));
+		GUI_SeongJeok.textPane_eng_personal.setText("  영어 :  "+Integer.toString((GUI_SeongJeok.guiAvgEng_personal)));
+		GUI_SeongJeok.textPane_math_personal.setText("  수학 :  "+Integer.toString((GUI_SeongJeok.guiAvgMath_personal)));
+		GUI_SeongJeok.textPane_totAvg_personal.setText("  평균 :  "+Integer.toString((GUI_SeongJeok.guiAvgTotAvg_personal)));
 	}
 	// ----------------------------------------------------------DRAW
 
@@ -364,5 +404,4 @@ public class EventActionListener implements ActionListener {
 		return con;
 	}
 	// ----------------------------------------------------------DB
-
 }
