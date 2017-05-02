@@ -31,6 +31,7 @@ public class GUI_SeongJeok {
 	static DefaultTableModel model = new DefaultTableModel(colNames, 0);
 	static int guiAvgKor_total=0, guiAvgEng_total=0, guiAvgMath_total=0, guiAvgTotAvg_total=0;
 	static int guiAvgKor_personal=0, guiAvgEng_personal=0, guiAvgMath_personal=0, guiAvgTotAvg_personal=0;
+	static String guiHakbun_personal=null, guiIrum_personal=null;
 	
 	static JTextPane textPane_kor_total = new JTextPane();
 	static JTextPane textPane_eng_total = new JTextPane();
@@ -41,6 +42,9 @@ public class GUI_SeongJeok {
 	static JTextPane textPane_eng_personal = new JTextPane();
 	static JTextPane textPane_math_personal = new JTextPane();
 	static JTextPane textPane_totAvg_personal = new JTextPane();
+	static JTextPane textPane_hakbun_personal = new JTextPane();
+	static JTextPane textPane_irum_personal = new JTextPane();
+	
 	
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("¼ºÀû°ü¸® ÇÁ·Î±×·¥");
@@ -49,7 +53,7 @@ public class GUI_SeongJeok {
 				.getImage(GUI_SeongJeok.class.getResource("/com/sun/java/swing/plaf/motif/icons/Inform.gif")));
 		frame.getContentPane().setBackground(new Color(255, 255, 255));
 		frame.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 19));
-		frame.setPreferredSize(new Dimension(500, 860));
+		frame.setPreferredSize(new Dimension(500, 850));
 		frame.setLocation(400, 200);
 		Container contentPane = frame.getContentPane();
 
@@ -60,7 +64,7 @@ public class GUI_SeongJeok {
 		table.setBorder(new LineBorder(new Color(0, 0, 0)));
 		table.setForeground(new Color(0, 0, 0));
 		table.setBackground(new Color(255, 255, 255));
-		table.setPreferredScrollableViewportSize(new Dimension(400, 300));
+		table.setPreferredScrollableViewportSize(new Dimension(400, 250));
 
 		int widths[] = { 70, 70, 50, 50, 50, 50, 50, 50 };
 		for (int i = 0; i < widths.length; i++) {
@@ -104,32 +108,32 @@ public class GUI_SeongJeok {
 		panel_input.setLayout(new GridLayout(0, 10, 0, 0));
 		JLabel label_hakbun = new JLabel("ÇÐ¹ø");
 		label_hakbun.setForeground(new Color(0, 0, 128));
-		label_hakbun.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 14));
+		label_hakbun.setFont(new Font("ÈÞ¸Õ¸ÅÁ÷Ã¼", Font.BOLD, 17));
 		label_hakbun.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_input.add(label_hakbun);
 		panel_input.add(hakbun);
 		JLabel label_irum = new JLabel("ÀÌ¸§");
 		label_irum.setForeground(new Color(0, 0, 128));
 		label_irum.setBackground(new Color(255, 255, 255));
-		label_irum.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 14));
+		label_irum.setFont(new Font("ÈÞ¸Õ¸ÅÁ÷Ã¼", Font.BOLD, 17));
 		label_irum.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_input.add(label_irum);
 		panel_input.add(irum);
 		JLabel label_kor = new JLabel("±¹¾î");
 		label_kor.setForeground(new Color(0, 0, 128));
-		label_kor.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 14));
+		label_kor.setFont(new Font("ÈÞ¸Õ¸ÅÁ÷Ã¼", Font.BOLD, 17));
 		label_kor.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_input.add(label_kor);
 		panel_input.add(kor);
 		JLabel label_eng = new JLabel("¿µ¾î");
 		label_eng.setForeground(new Color(0, 0, 128));
-		label_eng.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 14));
+		label_eng.setFont(new Font("ÈÞ¸Õ¸ÅÁ÷Ã¼", Font.BOLD, 17));
 		label_eng.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_input.add(label_eng);
 		panel_input.add(eng);
 		JLabel label_math = new JLabel("¼öÇÐ");
 		label_math.setForeground(new Color(0, 0, 128));
-		label_math.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 14));
+		label_math.setFont(new Font("ÈÞ¸Õ¸ÅÁ÷Ã¼", Font.BOLD, 17));
 		label_math.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_input.add(label_math);
 		panel_input.add(math);
@@ -143,31 +147,33 @@ public class GUI_SeongJeok {
 		// ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¹öÆ° ¸®½ºÆ®
 		JButton button_insert = new JButton("ÀúÀå");
 		button_insert.setForeground(Color.BLUE);
-		button_insert.setFont(new Font("¸¼Àº °íµñ Semilight", Font.BOLD, 14));
+		button_insert.setFont(new Font("ÈÞ¸Õ¸ÅÁ÷Ã¼", Font.BOLD, 19));
 		panel_button.add(button_insert);
 		button_insert.addActionListener(new EventActionListener(table, hakbun, irum, kor, eng, math));
 		JButton button_select = new JButton("Ãâ·Â");
 		button_select.setForeground(new Color(0, 128, 0));
-		button_select.setFont(new Font("¸¼Àº °íµñ Semilight", Font.BOLD, 14));
+		button_select.setFont(new Font("ÈÞ¸Õ¸ÅÁ÷Ã¼", Font.BOLD, 19));
 		panel_button.add(button_select);
 		button_select.addActionListener(new EventActionListener(table));
 
 		JButton button_search = new JButton("°Ë»ö");
-		button_search.setFont(new Font("¸¼Àº °íµñ Semilight", Font.BOLD, 14));
+		button_search.setForeground(new Color(199, 21, 133));
+		button_search.setFont(new Font("ÈÞ¸Õ¸ÅÁ÷Ã¼", Font.BOLD, 19));
 		panel_button.add(button_search);
 		button_search.addActionListener(new EventActionListener(table, hakbun));
 		JButton button_update = new JButton("¼öÁ¤");
-		button_update.setFont(new Font("¸¼Àº °íµñ Semilight", Font.BOLD, 14));
+		button_update.setForeground(new Color(0, 128, 128));
+		button_update.setFont(new Font("ÈÞ¸Õ¸ÅÁ÷Ã¼", Font.BOLD, 19));
 		panel_button.add(button_update);
 		button_update.addActionListener(new EventActionListener(table, hakbun, kor, eng, math));
 		JButton button_delete = new JButton("»èÁ¦");
 		button_delete.setForeground(Color.RED);
-		button_delete.setFont(new Font("¸¼Àº °íµñ Semilight", Font.BOLD, 14));
+		button_delete.setFont(new Font("ÈÞ¸Õ¸ÅÁ÷Ã¼", Font.BOLD, 19));
 		panel_button.add(button_delete);
 		button_delete.addActionListener(new EventActionListener(table));
 		JButton button_ploting = new JButton("±×·¡ÇÁ");
 		button_ploting.setForeground(new Color(255, 0, 255));
-		button_ploting.setFont(new Font("¸¼Àº °íµñ Semilight", Font.BOLD, 14));
+		button_ploting.setFont(new Font("ÈÞ¸Õ¸ÅÁ÷Ã¼", Font.BOLD, 19));
 		panel_button.add(button_ploting);
 		// ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¤Ñ¹öÆ° ¸®½ºÆ®
 
@@ -254,6 +260,18 @@ public class GUI_SeongJeok {
 		textPane_totAvg_total.setText("  Æò±Õ :  " +guiAvgTotAvg_total);
 		panel_total_totalNumbers.add(textPane_totAvg_total);
 		
+		JTextPane textPane_2 = new JTextPane();
+		panel_total_totalNumbers.add(textPane_2);
+		
+		JTextPane textPane_3 = new JTextPane();
+		panel_total_totalNumbers.add(textPane_3);
+		
+		JTextPane textPane_4 = new JTextPane();
+		panel_total_totalNumbers.add(textPane_4);
+		
+		JTextPane textPane_5 = new JTextPane();
+		panel_total_totalNumbers.add(textPane_5);
+		
 
 		JPanel panel_personal = new JPanel();
 		tabbedPane.addTab("°³ÀÎ¼ºÀû Â÷Æ®",
@@ -296,6 +314,22 @@ public class GUI_SeongJeok {
 		textPane_totAvg_personal.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 15));
 		textPane_totAvg_personal.setText("  Æò±Õ :  " + guiAvgTotAvg_personal);
 		panel_personal_totalNumbers.add(textPane_totAvg_personal);
+
+		textPane_totAvg_personal.setForeground(new Color(0, 0, 0));
+		textPane_hakbun_personal.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 15));
+		textPane_hakbun_personal.setText("  ÇÐ¹ø :  " + " - ");
+		panel_personal_totalNumbers.add(textPane_hakbun_personal);
+
+		textPane_totAvg_personal.setForeground(new Color(0, 0, 0));
+		textPane_irum_personal.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 15));
+		textPane_irum_personal.setText("  ÀÌ¸§ :  "+" - ");
+		panel_personal_totalNumbers.add(textPane_irum_personal);
+		
+		JTextPane textPane = new JTextPane();
+		panel_personal_totalNumbers.add(textPane);
+		
+		JTextPane textPane_1 = new JTextPane();
+		panel_personal_totalNumbers.add(textPane_1);
 		// -------------------------------------------------------------------------Â÷Æ®
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

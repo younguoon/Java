@@ -137,7 +137,6 @@ public class EventActionListener implements ActionListener {
 			arr[3] = Integer.toString(obj.eng);
 			arr[4] = Integer.toString(obj.math);
 			arr[5] = Integer.toString(obj.tot);
-			// arr[6] = obj.avg;
 			arr[6] = Double.toString((Math.round(obj.avg * 100) / 100.));
 			arr[7] = obj.grade;
 
@@ -145,13 +144,13 @@ public class EventActionListener implements ActionListener {
 
 			pstmt_select = con.prepareStatement(sql_select);
 			rs = pstmt_select.executeQuery();
-			rs.next();
+//			rs.next();
 			while (rs.next()) {
-				txHakbun.setText(rs.getString("hakbun"));
-				txIrum.setText(rs.getString("irum"));
-				txKor.setText(rs.getString("kor"));
-				txEng.setText(rs.getString("eng"));
-				txMath.setText(rs.getString("math"));
+				txHakbun.setText("");
+				txIrum.setText("");
+				txKor.setText("");
+				txEng.setText("");
+				txMath.setText("");
 			}
 		} catch (Exception e) {
 			System.out.println("DB연결 실패" + e.getMessage());
@@ -173,7 +172,7 @@ public class EventActionListener implements ActionListener {
 	private void select() {
 		PreparedStatement pstmt_select = null;
 		PreparedStatement pstmt_total = null;
-		ResultSet rs = null;
+		ResultSet rs_select = null;
 		ResultSet rs_total = null;
 		String sql_select = "select *from sungjuk order by hakbun asc";
 		String sql_total = "select ceil(avg(kor)) avgKor, ceil(avg(eng)) avgEng, ceil(avg(math)) avgMath, ceil(avg(avg)) avgAvg from sungjuk";
@@ -183,20 +182,19 @@ public class EventActionListener implements ActionListener {
 			Sungjuk obj = new Sungjuk();
 			con = connectDB();
 			pstmt_select = con.prepareStatement(sql_select);
-			rs = pstmt_select.executeQuery();
-			rs.next();
-				while(rs.next()){
-					GUI_SeongJeok.model.addRow(new Object[]{
-								rs.getString("hakbun"), 
-								rs.getString("irum"), 
-								rs.getString("kor"), 
-								rs.getString("eng"), 
-								rs.getString("math"), 
-								rs.getString("tot"),
-								rs.getString("avg"),
-								rs.getString("grade")}
-							);
-				}
+			rs_select = pstmt_select.executeQuery();
+					while(rs_select.next()){
+						GUI_SeongJeok.model.addRow(new Object[]{
+									rs_select.getString("hakbun"), 
+									rs_select.getString("irum"), 
+									rs_select.getString("kor"), 
+									rs_select.getString("eng"), 
+									rs_select.getString("math"), 
+									rs_select.getString("tot"),
+									rs_select.getString("avg"),
+									rs_select.getString("grade")}
+								);
+					}
 //			System.out.println("THIS IS eventAction select for before SQL QUERY");
 			pstmt_total = con.prepareStatement(sql_total);
 //			System.out.println("THIS IS eventAction select for before EXECUTE QUERY");
@@ -223,8 +221,10 @@ public class EventActionListener implements ActionListener {
 //			System.out.println("message1 : "+e.getMessage());
 		}finally{
 			try{
-				if(rs != null) rs.close();
+				if(rs_select != null) rs_select.close();
+				if(rs_total != null) rs_total.close();
 				if(pstmt_select != null) pstmt_select.close();
+				if(pstmt_total != null) pstmt_total.close();
 				if(con != null) con.close();
 			}catch(Exception e){
 				System.out.println("message2 : "+e.getMessage());
@@ -362,11 +362,13 @@ public class EventActionListener implements ActionListener {
 	// ----------------------------------------------------------DRAW
 	public void draw() {
 		int kor = 0, eng = 0, math = 0, avg = 0;
-
+		String hakbun, irum;
 		int row = table.getSelectedRow();
 		if (row == -1)
 			return;
-
+		
+		hakbun = (String)GUI_SeongJeok.model.getValueAt(row, 0);
+		irum = (String)GUI_SeongJeok.model.getValueAt(row, 1);
 		kor = Integer.parseInt((String) GUI_SeongJeok.model.getValueAt(row, 2));
 		eng = Integer.parseInt((String) GUI_SeongJeok.model.getValueAt(row, 3));
 		math = Integer.parseInt((String) GUI_SeongJeok.model.getValueAt(row, 4));
@@ -379,11 +381,15 @@ public class EventActionListener implements ActionListener {
 		GUI_SeongJeok.guiAvgEng_personal = eng;
 		GUI_SeongJeok.guiAvgMath_personal = math;
 		GUI_SeongJeok.guiAvgTotAvg_personal = avg;
+		GUI_SeongJeok.guiHakbun_personal = hakbun;
+		GUI_SeongJeok.guiIrum_personal = irum;
 		
 		GUI_SeongJeok.textPane_kor_personal.setText("  국어 :  "+Integer.toString((GUI_SeongJeok.guiAvgKor_personal)));
 		GUI_SeongJeok.textPane_eng_personal.setText("  영어 :  "+Integer.toString((GUI_SeongJeok.guiAvgEng_personal)));
 		GUI_SeongJeok.textPane_math_personal.setText("  수학 :  "+Integer.toString((GUI_SeongJeok.guiAvgMath_personal)));
 		GUI_SeongJeok.textPane_totAvg_personal.setText("  평균 :  "+Integer.toString((GUI_SeongJeok.guiAvgTotAvg_personal)));
+		GUI_SeongJeok.textPane_hakbun_personal.setText("  학번 :  "+GUI_SeongJeok.guiHakbun_personal);
+		GUI_SeongJeok.textPane_irum_personal.setText("  이름 :  "+GUI_SeongJeok.guiIrum_personal);
 	}
 	// ----------------------------------------------------------DRAW
 
