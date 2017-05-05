@@ -45,7 +45,6 @@ public class GUI_SeongJeok {
 	static JTextPane textPane_hakbun_personal = new JTextPane();
 	static JTextPane textPane_irum_personal = new JTextPane();
 	
-	
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("己利包府 橇肺弊伐");
 		frame.setBackground(new Color(255, 255, 255));

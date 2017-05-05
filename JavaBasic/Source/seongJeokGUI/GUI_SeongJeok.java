@@ -26,7 +26,6 @@ public class GUI_SeongJeok {
         DefaultTableModel model = new DefaultTableModel(colNames, 0);
 		JTable table = new JTable(model);         
 
-
 		table.setPreferredScrollableViewportSize(new Dimension(400,150));
 		
         int widths[] = {70,70,50,50,50,50,50,50};
@@ -38,14 +37,12 @@ public class GUI_SeongJeok {
         contentPane.add(new JScrollPane(table), BorderLayout.NORTH);
         DrawingPanel drawingPanel = new DrawingPanel();
         
-        
         JTextField hakbun = new JTextField(5);
         JTextField irum = new JTextField(5);
         JTextField kor = new JTextField(3);
         JTextField eng = new JTextField(3);
         JTextField math = new JTextField(3);
 
-        
         JButton button1 = new JButton("추가");
         JButton button2 = new JButton("삭제");
         JButton button3 = new JButton("수정");
