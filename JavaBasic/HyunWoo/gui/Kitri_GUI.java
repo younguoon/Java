@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Properties;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -24,6 +25,11 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import org.eclipse.wb.swing.FocusTraversalOnArray;
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+
+import sungJuk.jdbc.gui.DateLabelFormatter;
 
 public class Kitri_GUI extends JFrame {
 	JTable table;
@@ -32,12 +38,12 @@ public class Kitri_GUI extends JFrame {
 	String morning, lunch, dinner;
 	String apple, banana, strawberry;
 	String arr[] = new String[2];
-	
+
 	public static void main(String[] args) {
 		Kitri_GUI frame = new Kitri_GUI();
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setBounds(100, 100, 450, 600);
+		frame.setBounds(100, 100, 550, 600);
 	}
 
 	public Kitri_GUI() {
@@ -109,6 +115,9 @@ public class Kitri_GUI extends JFrame {
 		choice.add("아침");
 		choice.add("점심");
 		choice.add("저녁");
+		
+		JPanel panel_datePicker = new JPanel();
+		panel_buttom.add(panel_datePicker);
 		panel_buttom.add(choice);
 		
 		JButton btn_select = new JButton("출력");
@@ -141,7 +150,22 @@ public class Kitri_GUI extends JFrame {
 		table.setRowHeight(35);
 		scrollPane_table.setViewportView(table);
 		
-
+		
+//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡJdatePicker
+		UtilDateModel dateModel = new UtilDateModel();
+		Properties p = new Properties();
+		p.put("text.today", "Today");
+		p.put("text.month", "Month");
+		p.put("text.year", "Year");
+		
+		JDatePanelImpl datePanel = new JDatePanelImpl(dateModel, p);
+		panel_datePicker.setLayout(new BorderLayout(0, 0));
+		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+		datePicker.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_datePicker.add(datePicker, BorderLayout.NORTH);
+//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡJdatePicker
+		
+		
 		btn_select.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

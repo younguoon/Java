@@ -1,30 +1,35 @@
 package sungJuk.jdbc.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Toolkit;
+import java.util.Properties;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import java.awt.Color;
-import javax.swing.border.LineBorder;
-import javax.swing.ListSelectionModel;
-import java.awt.Toolkit;
-import javax.swing.JTabbedPane;
-import javax.swing.ImageIcon;
-import javax.swing.JTextPane;
-import javax.swing.border.EmptyBorder;
+
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
 
 public class GUI_SeongJeok {
 	static String colNames[] = { "학번", "이름", "국어", "영어", "수학", "총점", "평균", "등급" };
@@ -44,6 +49,7 @@ public class GUI_SeongJeok {
 	static JTextPane textPane_totAvg_personal = new JTextPane();
 	static JTextPane textPane_hakbun_personal = new JTextPane();
 	static JTextPane textPane_irum_personal = new JTextPane();
+	
 	
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("성적관리 프로그램");
@@ -329,10 +335,28 @@ public class GUI_SeongJeok {
 		
 		JTextPane textPane_1 = new JTextPane();
 		panel_personal_totalNumbers.add(textPane_1);
-		// -------------------------------------------------------------------------차트
+		
+		JPanel panel_datePicker = new JPanel();
+		panel_datePicker.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_datePicker.setForeground(Color.RED);
+		tabbedPane.addTab("DatePicker Test", new ImageIcon(GUI_SeongJeok.class.getResource("/javax/swing/plaf/basic/icons/JavaCup16.png")), panel_datePicker, null);
+		
+		UtilDateModel model = new UtilDateModel();
+		Properties p = new Properties();
+		p.put("text.today", "Today");
+		p.put("text.month", "Month");
+		p.put("text.year", "Year");
+		
+		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
+		panel_datePicker.setLayout(new BorderLayout(0, 0));
+		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+		datePicker.setBorder(new LineBorder(new Color(0, 0, 0)));
+		panel_datePicker.add(datePicker, BorderLayout.NORTH);
+		// -------------------------------------------------------------------------
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);
+
 	}
 }

@@ -15,15 +15,6 @@ public class Hyunwoo extends Frame {
 
    }
    // 선언문
-//   Panel pS = new Panel();
-
-//   Choice ch = new Choice();
-
-//   TextField tf = new TextField();
-//   Button send = new Button("전송");
-//   TextArea ta = new TextArea();
-//   Button ok = new Button("확인");
-//   Button exit = new Button("종료");
 
    public Hyunwoo() {
       Panel panel_all = new Panel();
@@ -84,16 +75,6 @@ public class Hyunwoo extends Frame {
       this.setSize(300, 400); // 먼저 화면 크기를 설정하고 보이기를 해야한다.
       this.setVisible(true); // true 는 보이고, false 는 보이지 않는다.
 
-//      pN
-      
-//      pS.setLayout(mgr);
-//      pS.add("Center", ch);
-//      this.setLayout(new BorderLayout(3, 100));
-//      this.add("South", pS);
-//      ch.add("아침");
-//      ch.add("점심");
-//      ch.add("저녁");
-//      pS.add("East", exit);
 
    }
 
